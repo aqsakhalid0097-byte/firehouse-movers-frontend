@@ -136,13 +136,17 @@ export const CodeRainField: React.FC<CodeRainFieldProps> = ({
     build();
     drawFrame();
 
+    // The section this sits behind can grow after mount (GSAP's pinned
+    // coverflow, the carousel/swipe mode switch, fonts settling), so track
+    // its real box size continuously rather than sizing once on mount.
+    const ro = new ResizeObserver(() => {
+      build();
+      drawFrame();
+    });
+    ro.observe(container);
+
     if (reduceMotionQuery.matches) {
-      const onResize = () => {
-        build();
-        drawFrame();
-      };
-      window.addEventListener('resize', onResize);
-      return () => window.removeEventListener('resize', onResize);
+      return () => ro.disconnect();
     }
 
     const io = new IntersectionObserver(
@@ -180,12 +184,9 @@ export const CodeRainField: React.FC<CodeRainFieldProps> = ({
     };
     rafRef.current = requestAnimationFrame(loop);
 
-    const onResize = () => build();
-    window.addEventListener('resize', onResize);
-
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      window.removeEventListener('resize', onResize);
+      ro.disconnect();
       io.disconnect();
     };
   }, [cellSize, redRatio]);
