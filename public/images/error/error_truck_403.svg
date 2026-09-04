@@ -1,0 +1,56 @@
+<svg class="art" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cartoon firehouse truck">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#ef4444"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+  <style>
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes flash {
+      from { opacity: .35; filter: drop-shadow(0 0 4px rgba(251,191,36,.3)); }
+      to { opacity: 1; filter: drop-shadow(0 0 12px rgba(251,191,36,.9)); }
+    }
+    .wheel-front {
+      transform-origin: 95px 152px;
+      animation: spin 2s linear infinite;
+    }
+    .wheel-rear {
+      transform-origin: 205px 152px;
+      animation: spin 2s linear infinite;
+    }
+    .siren {
+      transform-origin: 150px 93px;
+      animation: flash .8s ease-in-out infinite alternate;
+    }
+  </style>
+  <rect x="0" y="150" width="320" height="8" fill="#374151" opacity="0.7" rx="4"/>
+  <rect x="70" y="95" rx="8" ry="8" width="160" height="50" fill="url(#g)" stroke="#991b1b"/>
+  <rect x="50" y="110" rx="8" ry="8" width="60" height="35" fill="#9ca3af" stroke="#6b7280"/>
+  <rect x="95" y="103" width="55" height="18" fill="#fca5a5" opacity=".3" rx="2"/>
+  <rect x="58" y="115" width="28" height="16" rx="3" fill="#93c5fd" stroke="#60a5fa"/>
+  <rect class="siren" x="140" y="88" width="20" height="10" rx="2" fill="#fbbf24" stroke="#b45309"/>
+
+  <!-- Front Wheel (Left) -->
+  <g class="wheel-front">
+    <circle cx="95" cy="152" r="13" fill="#111827" stroke="#4b5563" stroke-width="3"/>
+    <circle cx="95" cy="152" r="9" fill="#1f2937" stroke="#9ca3af" stroke-width="2.5" stroke-dasharray="5 3"/>
+    <circle cx="95" cy="152" r="4" fill="#d1d5db"/>
+    <line x1="95" y1="145" x2="95" y2="159" stroke="#374151" stroke-width="1.5"/>
+    <line x1="88" y1="152" x2="102" y2="152" stroke="#374151" stroke-width="1.5"/>
+  </g>
+
+  <!-- Rear Wheel (Right) -->
+  <g class="wheel-rear">
+    <circle cx="205" cy="152" r="13" fill="#111827" stroke="#4b5563" stroke-width="3"/>
+    <circle cx="205" cy="152" r="9" fill="#1f2937" stroke="#9ca3af" stroke-width="2.5" stroke-dasharray="5 3"/>
+    <circle cx="205" cy="152" r="4" fill="#d1d5db"/>
+    <line x1="205" y1="145" x2="205" y2="159" stroke="#374151" stroke-width="1.5"/>
+    <line x1="198" y1="152" x2="212" y2="152" stroke="#374151" stroke-width="1.5"/>
+  </g>
+
+  <text x="150" y="128" text-anchor="middle" font-family="monospace, ui-monospace, sans-serif" font-size="20" font-weight="bold" fill="#fff">403</text>
+</svg>
