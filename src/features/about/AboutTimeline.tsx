@@ -87,9 +87,9 @@ const milestones: Milestone[] = [
 // Tailwind classes on the card and track below so the JS translation math
 // matches what actually renders.
 const CARD_STEP = {
-  base: 280 + 24, // w-[280px] + gap-6
-  sm: 380 + 32, // sm:w-[380px] + sm:gap-8
-  lg: 420 + 40, // lg:w-[420px] + lg:gap-10
+  base: 300 + 24, // w-[300px] + gap-6
+  sm: 400 + 32, // sm:w-[400px] + sm:gap-8
+  lg: 440 + 40, // lg:w-[440px] + lg:gap-10
 };
 
 function getCardStep(): number {
@@ -178,7 +178,6 @@ export const AboutTimeline: React.FC = () => {
             const dist = Math.min(1, Math.abs(rawIndex - i));
             gsap.set(el, {
               scale: gsap.utils.interpolate(1, 0.82, dist),
-              opacity: gsap.utils.interpolate(1, 0.38, dist),
               y: gsap.utils.interpolate(0, 22, dist),
               zIndex: Math.round((1 - dist) * 100),
             });
@@ -269,7 +268,7 @@ export const AboutTimeline: React.FC = () => {
               ref={trackRef}
               className={`flex items-center gap-4 sm:gap-8 lg:gap-10 will-change-transform ${
                 mode === 'carousel'
-                  ? 'pl-[calc(50vw-140px)] pr-[calc(50vw-140px)] sm:pl-[calc(50vw-190px)] sm:pr-[calc(50vw-190px)] lg:pl-[calc(50vw-210px)] lg:pr-[calc(50vw-210px)]'
+                  ? 'pl-[calc(50vw-150px)] pr-[calc(50vw-150px)] sm:pl-[calc(50vw-200px)] sm:pr-[calc(50vw-200px)] lg:pl-[calc(50vw-220px)] lg:pr-[calc(50vw-220px)]'
                   : 'px-4 sm:px-10 overflow-x-auto snap-x snap-mandatory pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden'
               }`}
             >
@@ -279,12 +278,12 @@ export const AboutTimeline: React.FC = () => {
                   ref={(el) => {
                     cardRefs.current[i] = el;
                   }}
-                  className={`about-tl-card shrink-0 w-[82vw] max-w-[280px] sm:w-[380px] lg:w-[420px] ${
+                  className={`about-tl-card shrink-0 w-[82vw] max-w-[300px] sm:w-[400px] lg:w-[440px] ${
                     mode === 'swipe' ? 'snap-center' : ''
                   }`}
                 >
                   <TiltCard
-                    className="w-full h-[400px] xs:h-[420px] sm:h-[460px] lg:h-[480px]"
+                    className="w-full h-[420px] xs:h-[440px] sm:h-[480px] lg:h-[500px]"
                     maxTilt={5}
                     scale={1.015}
                     delayMs={300}
