@@ -60,9 +60,49 @@ export const ScrollPageTransition: React.FC = () => {
   // Handle positioning when landing on Main from About
   useEffect(() => {
     if (isProposalPage && typeof window !== 'undefined') {
+      const isReload = () => {
+        try {
+          const navEntries = performance.getEntriesByType('navigation');
+          if (navEntries.length > 0) {
+            return (navEntries[0] as PerformanceNavigationTiming).type === 'reload';
+          }
+          return (performance as unknown as { navigation?: { type?: number } }).navigation?.type === 1;
+        } catch {
+          return false;
+        }
+      };
+
+      if (isReload()) {
+        if (window.location.search.includes('from=about') || window.location.hash === '#estimate-calculator') {
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+        try {
+          sessionStorage.removeItem('scroll_to_bottom_on_landing');
+        } catch {}
+        delete (window as unknown as { __transitionToBottom?: boolean }).__transitionToBottom;
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      const hasTransitionFlag =
+        (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('scroll_to_bottom_on_landing') === 'true') ||
+        (window as unknown as { __transitionToBottom?: boolean }).__transitionToBottom === true;
       const urlParams = new URLSearchParams(window.location.search);
-      const isFromAbout = urlParams.get('from') === 'about' || window.location.hash === '#estimate-calculator';
+      const isFromAbout =
+        hasTransitionFlag ||
+        urlParams.get('from') === 'about' ||
+        window.location.hash === '#estimate-calculator';
+
       if (isFromAbout) {
+        try {
+          sessionStorage.removeItem('scroll_to_bottom_on_landing');
+        } catch {}
+        delete (window as unknown as { __transitionToBottom?: boolean }).__transitionToBottom;
+
+        if (window.location.search.includes('from=about') || window.location.hash === '#estimate-calculator') {
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+
         const scrollToBottom = () => {
           const el = document.getElementById('estimate-calculator');
           if (el) {
@@ -103,7 +143,11 @@ export const ScrollPageTransition: React.FC = () => {
       if (direction === 'to-about') {
         router.push('/about');
       } else {
-        router.push('/?from=about#estimate-calculator');
+        try {
+          sessionStorage.setItem('scroll_to_bottom_on_landing', 'true');
+        } catch {}
+        (window as unknown as { __transitionToBottom?: boolean }).__transitionToBottom = true;
+        router.push('/');
       }
       accumRef.current = 0;
       setTargetProgress(0);
@@ -119,7 +163,11 @@ export const ScrollPageTransition: React.FC = () => {
     if (direction === 'to-about') {
       router.push('/about');
     } else {
-      router.push('/?from=about#estimate-calculator');
+      try {
+        sessionStorage.setItem('scroll_to_bottom_on_landing', 'true');
+      } catch {}
+      (window as unknown as { __transitionToBottom?: boolean }).__transitionToBottom = true;
+      router.push('/');
     }
 
     // Phase 2: Hide label & position target page underneath solid red
