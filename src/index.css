@@ -1,0 +1,668 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Aeonik Font Face Definitions (All Heading Typography)
+   ============================================================ */
+@font-face {
+  font-family: 'Aeonik';
+  src: url('/fonts/aeonik/Aeonik-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('/fonts/aeonik/Aeonik-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('/fonts/aeonik/Aeonik-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('/fonts/aeonik/Aeonik-Black.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('/fonts/aeonik/Aeonik-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'Aeonik', var(--font-aeonik, 'Aeonik'), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Monospace accent for technical/numeric details (dispatch codes,
+       ETAs, timestamps, tracking numbers, stat counters) — mirrors the
+       IBM Plex Mono accent used on lusion.co. Overrides Tailwind's
+       default font-mono utility everywhere it's already used. */
+    --font-mono: var(--font-plex-mono, 'IBM Plex Mono'), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    background-color: #0f172a;
+    color: #f8fafc;
+    min-height: 100vh;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+
+/* ============================================================
+   All Headings across all pages rendered with Aeonik
+   ============================================================ */
+h1, h2, h3, h4, h5, h6,
+h1 *, h2 *, h3 *, h4 *, h5 *, h6 *,
+.font-heading,
+.font-heading *,
+.animate-heading,
+.animate-heading *,
+.hero-headline-line,
+[data-heading],
+[data-heading] * {
+  font-family: 'Aeonik', var(--font-aeonik, 'Aeonik'), system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* ============================================================
+   Display Headings — ultra-light uppercase editorial treatment.
+   Overrides the Aeonik heading rule above (which is !important),
+   so the font-family here must be !important too. Sizes are
+   fluid per role rather than fixed, so each section can carry the
+   treatment at its own scale.
+   ============================================================ */
+.display-heading,
+.display-heading * {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.045em !important;
+  line-height: 0.86 !important;
+  text-transform: uppercase !important;
+}
+
+/* Hero: tops out at the 136px reference size */
+.display-heading--hero,
+.display-heading--hero * {
+  font-size: clamp(3.2rem, 9.8vw, 136px) !important;
+  line-height: 0.86 !important;
+  letter-spacing: -0.05em !important;
+  font-weight: 900 !important;
+}
+
+/* Major section headings */
+.display-heading--section,
+.display-heading--section * {
+  font-size: clamp(2.2rem, 5.5vw, 76px) !important;
+  line-height: 0.88 !important;
+  letter-spacing: -0.045em !important;
+  font-weight: 900 !important;
+}
+
+/* Editorial directory headings (Services) — tailored 2-line fit without viewport overflow */
+.display-heading--editorial,
+.display-heading--editorial * {
+  font-size: clamp(1.75rem, 3.4vw, 44px) !important;
+  line-height: 0.88 !important;
+  letter-spacing: -0.045em !important;
+  font-weight: 900 !important;
+}
+
+/* Secondary headings inside dense layouts */
+.display-heading--sub,
+.display-heading--sub * {
+  font-size: clamp(1.6rem, 3.8vw, 46px) !important;
+  line-height: 0.90 !important;
+  letter-spacing: -0.04em !important;
+  font-weight: 900 !important;
+}
+
+/* Inline/sticky headers that share a row with other controls */
+.display-heading--compact,
+.display-heading--compact * {
+  font-size: clamp(1.35rem, 2.8vw, 34px) !important;
+  line-height: 0.92 !important;
+  letter-spacing: -0.035em !important;
+  font-weight: 900 !important;
+}
+
+/* Dossier section headers (About Page) */
+.display-heading--dossier,
+.display-heading--dossier * {
+  font-size: clamp(1.35rem, 2.5vw, 30px) !important;
+  line-height: 0.90 !important;
+  letter-spacing: -0.04em !important;
+  font-weight: 900 !important;
+}
+
+/* SVG Truck Driving Animation Styles */
+.truck-body { fill: #ef4444; stroke: #1a1a1a; stroke-width: 2; }
+.truck-cab { fill: #1a1a1a; }
+.truck-window { fill: rgba(255, 255, 255, 0.15); }
+.wheel { fill: #262626; stroke: #1a1a1a; stroke-width: 2; }
+.headlight { fill: #fcd34d; }
+.beam { fill: #fcd34d; opacity: 0.2; }
+
+/* ============================================================
+   Page & Section Heading Animations
+   Palette restricted to red / black / white / grey only.
+   ============================================================ */
+
+/* Generic entrance reveal applied to every page-level heading.
+   A left-to-right "curtain" wipe + rise + a red/white/grey scan-line
+   sweeping underneath. No color values outside the theme are used. */
+@keyframes heading-curtain-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+    clip-path: inset(0 100% 0 0);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes heading-scan-sweep {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+.animate-heading {
+  position: relative;
+  animation: heading-curtain-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity, clip-path;
+}
+
+.animate-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: linear-gradient(90deg, #ef4444 0%, #f5f5f5 45%, #9ca3af 80%, transparent 100%);
+  transform-origin: left center;
+  border-radius: 9999px;
+  pointer-events: none;
+  animation: heading-scan-sweep 1s 0.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Kinetic word-by-word reveal + looping chrome-red gradient sweep,
+   used by the AnimatedHeading component on hero sections. */
+@keyframes gradientSweep {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-text {
+  background-size: 200% auto;
+  animation: gradientSweep 4s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-heading,
+  .animate-heading::after,
+  .animate-gradient-text,
+  [class*='animate-[indicator-grow'] {
+    animation: none !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* Active service-card indicator grow-in (Editorial Services section) */
+/* About dossier: shared entrance for filtered/staggered list items */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes indicator-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* ============================================================
+   Hide Default OS Cursor when Custom Cursor is active
+   ============================================================ */
+@media (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor *,
+  html.has-custom-cursor *::before,
+  html.has-custom-cursor *::after,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor input,
+  html.has-custom-cursor select,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor canvas,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor .cursor-pointer {
+    cursor: none !important;
+  }
+}
+
+/* ============================================================
+   Lusion-Style Editorial Service Cards Hover Interaction
+   - Tactile card lift / scale(1.01)
+   - Masked title rolling forward (original slides out, duplicate slides in)
+   - Secondary subtitle smoothly vanishes with opacity & slight translation
+   - Title visually centers into the card space
+   - Arrow pops forward with masked duplicate slide
+   - Easing: cubic-bezier(0.16, 1, 0.3, 1) across 450-500ms
+   ============================================================ */
+.service-item {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 200ms ease,
+              border-color 200ms ease,
+              box-shadow 300ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover {
+    transform: scale(1.01);
+  }
+}
+
+.service-title-wrap {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-title-wrap {
+    transform: translateY(7px);
+  }
+}
+
+.service-title-primary {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-title-primary {
+    transform: translateX(112%);
+  }
+}
+
+.service-title-duplicate {
+  transform: translateX(-112%);
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-title-duplicate {
+    transform: translateX(0%);
+  }
+}
+
+.service-description {
+  transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-description {
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+  }
+}
+
+.service-arrow-wrap {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 200ms ease,
+              color 200ms ease,
+              box-shadow 300ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-arrow-wrap {
+    transform: scale(1.08);
+  }
+}
+
+/* Diagonal arrow animation (standard cards) */
+.service-arrow-primary {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-arrow-primary {
+    transform: translate(100%, -100%);
+    opacity: 0;
+  }
+}
+
+.service-arrow-duplicate {
+  transform: translate(-100%, 100%);
+  opacity: 0;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-arrow-duplicate {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+/* Horizontal arrow animation (active card) */
+.service-arrow-primary-h {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-arrow-primary-h {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.service-arrow-duplicate-h {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-arrow-duplicate-h {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.service-number {
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 200ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .service-item:hover .service-number {
+    transform: translateX(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-item,
+  .service-item:hover,
+  .service-title-wrap,
+  .service-title-primary,
+  .service-title-duplicate,
+  .service-description,
+  .service-arrow-wrap,
+  .service-arrow-primary,
+  .service-arrow-duplicate,
+  .service-arrow-primary-h,
+  .service-arrow-duplicate-h,
+  .service-number {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   Continuous Scroll-Controlled Proposal ↔ About Page Transition
+   ========================================================================== */
+.banner-cover {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  display: flex;
+}
+
+.banner-cover .banner-panel {
+  flex: 1;
+  background-color: #d81e27;
+  height: 100%;
+  transform: translateY(100%);
+  will-change: transform;
+  border-right: 1px solid rgba(185, 28, 28, 0.5);
+  box-shadow: 0 -12px 35px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.banner-cover .banner-panel:last-child {
+  border-right: none;
+}
+
+.banner-cover .banner-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Phase: Covered (Screen fully covered in red) */
+.banner-cover.phase-covered .banner-panel {
+  transform: translateY(0%) !important;
+}
+
+/* Phase: Leaving (Pillars animate upward off-screen to reveal target page) */
+.banner-cover.phase-leaving .banner-panel {
+  transform: translateY(-100%) !important;
+  transition: transform 450ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.banner-cover.phase-leaving .banner-panel:nth-child(1) { transition-delay: 0s; }
+.banner-cover.phase-leaving .banner-panel:nth-child(2) { transition-delay: 0.035s; }
+.banner-cover.phase-leaving .banner-panel:nth-child(3) { transition-delay: 0.07s; }
+.banner-cover.phase-leaving .banner-panel:nth-child(4) { transition-delay: 0.105s; }
+.banner-cover.phase-leaving .banner-panel:nth-child(5) { transition-delay: 0.14s; }
+
+/* Masked Transition Label */
+.banner-label-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9995;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.banner-label-overlay.active {
+  opacity: 1;
+}
+
+.banner-label-text {
+  font-family: var(--font-aeonik), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(48px, 9vw, 130px);
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.banner-label-text span {
+  display: block;
+  transform: translateY(112%);
+  transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.banner-label-overlay.active .banner-label-text span {
+  transform: translateY(0);
+}
+
+/* Subtle Scroll Boundary Progress Indicator Badge */
+.scroll-boundary-pill {
+  position: fixed;
+  z-index: 9000;
+  background: rgba(13, 11, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(216, 30, 39, 0.15);
+  transition: opacity 240ms ease, transform 300ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.scroll-boundary-pill.pos-bottom {
+  bottom: 28px;
+  left: 50%;
+  transform: translate(-50%, 16px);
+}
+
+.scroll-boundary-pill.pos-bottom.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.scroll-boundary-pill.pos-top {
+  top: 88px;
+  left: 50%;
+  transform: translate(-50%, -16px);
+}
+
+.scroll-boundary-pill.pos-top.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.scroll-boundary-pill .pill-text {
+  font-family: var(--font-aeonik), var(--font-plex-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.scroll-boundary-pill .pill-track {
+  width: 96px;
+  height: 2.5px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-boundary-pill .pill-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: #d81e27;
+  border-radius: 9999px;
+  box-shadow: 0 0 8px rgba(216, 30, 39, 0.8);
+}
+
+/* ==========================================================================
+   Mobile-Only Responsive Adaptations (Desktop Styles Strictly Preserved)
+   ========================================================================== */
+@media (max-width: 639px) {
+  /* Scale down minimum clamp floor so long words don't overflow on 320px-375px */
+  .display-heading--hero,
+  .display-heading--hero * {
+    font-size: clamp(2.1rem, 11vw, 3.2rem) !important;
+    line-height: 0.9 !important;
+  }
+
+  .display-heading--section,
+  .display-heading--section * {
+    font-size: clamp(1.75rem, 8vw, 2.2rem) !important;
+    line-height: 0.92 !important;
+  }
+
+  .display-heading--editorial,
+  .display-heading--editorial * {
+    font-size: clamp(1.45rem, 6.5vw, 1.75rem) !important;
+    line-height: 0.94 !important;
+  }
+
+  .display-heading--sub,
+  .display-heading--sub * {
+    font-size: clamp(1.3rem, 5.5vw, 1.6rem) !important;
+  }
+
+  .display-heading--compact,
+  .display-heading--compact * {
+    font-size: clamp(1.15rem, 4.5vw, 1.35rem) !important;
+  }
+
+  /* Boundary progress pill fits cleanly within narrow mobile viewports */
+  .scroll-boundary-pill {
+    padding: 8px 14px;
+    gap: 10px;
+    max-width: calc(100vw - 28px);
+  }
+
+  .scroll-boundary-pill .pill-text {
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+  }
+
+  .scroll-boundary-pill .pill-track {
+    width: 60px;
+  }
+}

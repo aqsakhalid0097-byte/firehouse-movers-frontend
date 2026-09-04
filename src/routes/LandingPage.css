@@ -1,0 +1,236 @@
+/* LandingPage.css - Firehouse Movers Landing Page Animations & Layouts */
+
+/* SVG Truck Styles */
+.truck-body { fill: #ef4444; stroke: #1a1a1a; stroke-width: 2; }
+.truck-cab { fill: #1a1a1a; }
+.truck-window { fill: rgba(255, 255, 255, 0.15); }
+.wheel { fill: #262626; stroke: #1a1a1a; stroke-width: 2; }
+.headlight { fill: #fcd34d; }
+.beam { fill: #fcd34d; opacity: 0.2; }
+
+/* Background Shift Animation */
+@keyframes backgroundShift {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.02) translate(-1px, -1px); }
+}
+
+.background-image {
+  animation: backgroundShift 20s ease-in-out infinite;
+}
+
+/* Service Card Insets (Exact Django original) */
+.service-text-card {
+  width: 100%;
+  padding: 2.5rem;
+  background-color: #1f1f1f;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+}
+
+@media (min-width: 768px) {
+  .service-text-card {
+    width: 50%;
+  }
+  .service-text-card-inset-left {
+    margin-right: -2.5rem;
+  }
+  .service-text-card-inset-right {
+    margin-left: -2.5rem;
+  }
+}
+
+.service-text-card h3 {
+  font-size: 1.875rem !important;
+  font-weight: 700 !important;
+  color: #ef4444 !important;
+  margin-bottom: 1rem !important;
+}
+
+.service-text-card p {
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+}
+
+.service-image-left img,
+.service-image-right img {
+  border-radius: 0.75rem;
+  object-fit: cover;
+  width: 100%;
+  height: 24rem;
+}
+
+/* Pack, Move, Settle */
+#pack-section,
+#move-section, 
+#settle-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style: none;
+  will-change: transform, opacity;
+}
+
+/* Testimonial Cards Stack */
+.cards-stack-container {
+  position: relative;
+  height: 920px;
+  width: 100%;
+  max-width: 38rem;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.testimonial-card {
+  position: absolute;
+  width: 100%;
+  min-height: 180px;
+  background-color: rgba(31, 41, 55, 0.9);
+  backdrop-filter: blur(8px);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  max-width: 38rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  text-align: left;
+  transition: border-color 0.3s ease;
+}
+
+.testimonial-card:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.testimonial-text {
+  color: #e5e7eb;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.author-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.author-avatar.pink { background-color: rgba(236, 72, 153, 0.2); color: #f472b6; }
+.author-avatar.blue { background-color: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+.author-avatar.green { background-color: rgba(34, 197, 94, 0.2); color: #4ade80; }
+.author-avatar.purple { background-color: rgba(168, 85, 247, 0.2); color: #c084fc; }
+
+.author-name {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.team-background {
+  background-image: url('/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Dual Color Changing Section */
+#color-changing-section {
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+#color-changing-section .first-layer {
+  z-index: 1;
+  background-color: #ef4444;
+}
+
+#color-changing-section .second-layer {
+  z-index: 2;
+  background-color: #1a1a1a;
+}
+
+.dark-text {
+  color: #1a1a1a;
+}
+
+#color-changing-section .text-6xl {
+  font-size: 4.5rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  #color-changing-section .text-6xl {
+    font-size: 6rem;
+    line-height: 1.1;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  #color-changing-section .text-6xl {
+    font-size: 8rem;
+    line-height: 1.1;
+  }
+}
+
+@media (min-width: 1025px) {
+  #color-changing-section .text-6xl {
+    font-size: 10rem;
+    line-height: 1.1;
+  }
+}
+
+@media (min-width: 1920px) {
+  #color-changing-section .text-6xl {
+    font-size: 12rem;
+    line-height: 1.1;
+  }
+}
+
+/* Grid Pattern Overlay */
+.grid-pattern-overlay {
+  background-image: radial-gradient(rgba(239, 68, 68, 0.2) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Services Overview Boundary Confinement */
+#services-overview {
+  overflow: hidden !important;
+  background-color: #1a1a1a;
+  contain: paint;
+}
+
+#services-overview .cards-container {
+  overflow: hidden !important;
+}
+
+#services-title {
+  will-change: transform, color;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: none !important;
+}
+
+/* Text Shadows */
+.modern-text-shadow {
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.85), 0 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.hero-title-shadow {
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
