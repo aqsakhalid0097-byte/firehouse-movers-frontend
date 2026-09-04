@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronLeft, ChevronRight, MoveHorizontal } from 'lucide-react';
 import { AboutSectionHeader } from './AboutSectionHeader';
 import { TiltCard } from '../../components/TiltCard';
+import { CodeRainField } from '../../components/CodeRainField';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -207,9 +208,12 @@ export const AboutTimeline: React.FC = () => {
     <section
       id="timeline"
       ref={sectionRef}
-      className="scroll-mt-32 py-16 sm:py-20 bg-[#0b0b0b] border-b border-neutral-800 overflow-hidden"
+      className="relative scroll-mt-32 py-16 sm:py-20 bg-[#0b0b0b] border-b border-neutral-800 overflow-hidden"
     >
-      <div className="w-[min(1200px,calc(100%-48px))] sm:w-[min(1200px,calc(100%-80px))] mx-auto">
+      {/* Ambient background: continuously rerolling glyph columns behind the whole timeline */}
+      <CodeRainField className="z-0" cellSize={17} redRatio={0.07} opacity={0.4} />
+
+      <div className="relative z-10 w-[min(1200px,calc(100%-48px))] sm:w-[min(1200px,calc(100%-80px))] mx-auto">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <AboutSectionHeader
             index="02"
@@ -250,7 +254,7 @@ export const AboutTimeline: React.FC = () => {
         </div>
       </div>
 
-      <div ref={triggerRef} className="relative">
+      <div ref={triggerRef} className="relative z-10">
         <div
           ref={pinRef}
           className={
@@ -346,7 +350,7 @@ export const AboutTimeline: React.FC = () => {
       </div>
 
       {/* Progress dots — mirrors the active card in both modes */}
-      <div className="w-[min(1200px,calc(100%-32px))] sm:w-[min(1200px,calc(100%-80px))] mx-auto mt-6 sm:mt-8">
+      <div className="relative z-10 w-[min(1200px,calc(100%-32px))] sm:w-[min(1200px,calc(100%-80px))] mx-auto mt-6 sm:mt-8">
         <div className="flex items-center justify-center gap-2">
           {milestones.map((milestone, i) => (
             <button
