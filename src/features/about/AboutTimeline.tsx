@@ -212,7 +212,7 @@ export const AboutTimeline: React.FC = () => {
       <div className="w-[min(1200px,calc(100%-48px))] sm:w-[min(1200px,calc(100%-80px))] mx-auto">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <AboutSectionHeader
-            index="03"
+            index="02"
             title="Timeline"
             meta={mode === 'carousel' ? 'SCROLL TO MOVE THROUGH TIME' : 'SWIPE TO EXPLORE'}
           />
