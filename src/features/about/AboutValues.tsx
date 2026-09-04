@@ -77,7 +77,7 @@ export const AboutValues: React.FC = () => {
   return (
     <section id="standards" className="scroll-mt-32 py-16 sm:py-20 bg-black border-b border-neutral-800">
       <div className="w-[min(1200px,calc(100%-32px))] sm:w-[min(1200px,calc(100%-80px))] mx-auto">
-        <AboutSectionHeader index="04" title="Operating standards" meta="APPLIED TO EVERY JOB" />
+        <AboutSectionHeader index="03" title="Operating standards" meta="APPLIED TO EVERY JOB" />
 
         <div ref={ref} className="rounded-xl border border-neutral-800 overflow-hidden divide-y divide-neutral-800">
           {standards.map((standard, i) => {
