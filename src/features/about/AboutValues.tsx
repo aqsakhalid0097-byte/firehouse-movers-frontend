@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Flame, Shield, Scale, Heart, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Flame, Shield, Scale, Heart, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { AboutSectionHeader } from './AboutSectionHeader';
 import { useReveal, revealBase, revealHidden, revealShown, staggerDelay } from './useReveal';
 
 interface Standard {
   id: string;
   code: string;
+  category: string;
   title: string;
   promise: string;
   icon: React.ReactNode;
@@ -19,9 +20,10 @@ const standards: Standard[] = [
   {
     id: 'crew',
     code: 'STD-01',
-    title: 'Brotherhood & discipline',
+    category: 'PERSONNEL INTEGRITY',
+    title: 'Brotherhood & Discipline',
     promise: 'One assigned unit, with a named lead mover on every job.',
-    icon: <Flame className="w-4 h-4" />,
+    icon: <Flame className="w-5 h-5" />,
     included: [
       'Employed movers — zero day-labor',
       'Background checks and in-house certification',
@@ -32,9 +34,10 @@ const standards: Standard[] = [
   {
     id: 'care',
     code: 'STD-02',
-    title: 'Extreme care & protection',
+    category: 'PROPERTY DEFENSE',
+    title: 'Extreme Care & Protection',
     promise: 'Your home is protected before a single box is lifted.',
-    icon: <Shield className="w-4 h-4" />,
+    icon: <Shield className="w-5 h-5" />,
     included: [
       'Jamb guards and bannister quilts on arrival',
       'Neoprene runners on hardwood, tile and carpet',
@@ -45,9 +48,10 @@ const standards: Standard[] = [
   {
     id: 'pricing',
     code: 'STD-03',
-    title: 'Radical honesty on price',
+    category: 'ESTIMATE ACCURACY',
+    title: 'Radical Honesty On Price',
     promise: 'The number on your written estimate is the number you pay.',
-    icon: <Scale className="w-4 h-4" />,
+    icon: <Scale className="w-5 h-5" />,
     included: [
       'Written estimate issued before move day',
       'No stair fees, fuel spikes or travel surcharges',
@@ -58,9 +62,10 @@ const standards: Standard[] = [
   {
     id: 'community',
     code: 'STD-04',
-    title: 'Community & first responders',
+    category: 'CIVIC DEDICATION',
+    title: 'Community & First Responders',
     promise: 'We stay accountable to the community our founders serve.',
-    icon: <Heart className="w-4 h-4" />,
+    icon: <Heart className="w-5 h-5" />,
     included: [
       'Rates for first responders and veterans',
       'North Texas youth athletic sponsorships',
@@ -71,101 +76,119 @@ const standards: Standard[] = [
 ];
 
 export const AboutValues: React.FC = () => {
-  const [openId, setOpenId] = useState<string>(standards[0].id);
+  const [activeId, setActiveId] = useState<string>(standards[0].id);
   const { ref, isVisible } = useReveal<HTMLDivElement>();
 
   return (
-    <section id="standards" className="scroll-mt-32 py-16 sm:py-20 bg-black border-b border-neutral-800">
-      <div className="w-[min(1200px,calc(100%-32px))] sm:w-[min(1200px,calc(100%-80px))] mx-auto">
+    <section id="standards" className="scroll-mt-32 py-20 sm:py-24 bg-black border-b border-neutral-800/80 relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div
+        aria-hidden="true"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-red-600/5 rounded-full blur-[140px] pointer-events-none"
+      ></div>
+
+      <div className="w-[min(1200px,calc(100%-32px))] sm:w-[min(1200px,calc(100%-80px))] mx-auto relative z-10">
         <AboutSectionHeader index="03" title="Operating standards" meta="APPLIED TO EVERY JOB" />
 
-        <div ref={ref} className="rounded-xl border border-neutral-800 overflow-hidden divide-y divide-neutral-800">
+        {/* Tactical Subheading Bar */}
+        <div className="flex items-center justify-between flex-wrap gap-3 mb-8 pb-4 border-b border-neutral-800/60">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span className="font-mono text-xs font-semibold text-neutral-300 uppercase tracking-wider">
+              4 Non-Negotiable Operational Directives
+            </span>
+          </div>
+          <div className="font-mono text-[11px] text-neutral-500 uppercase tracking-widest bg-neutral-900/90 border border-neutral-800/90 px-3 py-1 rounded-full">
+            Standard Operating Procedures // 100% Enforced
+          </div>
+        </div>
+
+        {/* 2x2 Tactical Dossier Grid */}
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-7">
           {standards.map((standard, i) => {
-            const isOpen = openId === standard.id;
+            const isSelected = activeId === standard.id;
             return (
               <div
                 key={standard.id}
-                className={`transition-colors duration-300 ${revealBase} ${
+                onClick={() => setActiveId(standard.id)}
+                className={`group relative rounded-2xl border transition-all duration-300 p-6 sm:p-8 flex flex-col justify-between cursor-pointer select-none ${revealBase} ${
                   isVisible ? revealShown : revealHidden
-                } ${isOpen ? 'bg-[#131313]' : 'bg-[#0f0f0f]'}`}
+                } ${
+                  isSelected
+                    ? 'bg-[#131313] border-red-500/70 shadow-[0_0_35px_rgba(239,68,68,0.18)] -translate-y-1'
+                    : 'bg-[#0e0e0e] border-neutral-800/80 hover:bg-[#121212] hover:border-neutral-700 hover:-translate-y-1 hover:shadow-xl'
+                }`}
                 style={staggerDelay(i, 80)}
               >
-                <button
-                  type="button"
-                  onClick={() => setOpenId(isOpen ? '' : standard.id)}
-                  aria-expanded={isOpen}
-                  className="relative w-full text-left px-4 sm:px-6 py-3.5 sm:py-4 flex items-center gap-3 sm:gap-6 group cursor-pointer"
-                >
-                  {/* Hover sweep */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-[#161616] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"
-                  ></span>
-
-                  <span
-                    className={`relative shrink-0 w-9 h-9 rounded-lg border flex items-center justify-center transition-all duration-300 ${
-                      isOpen
-                        ? 'bg-red-600/15 border-red-500/50 text-red-400 scale-105'
-                        : 'bg-neutral-900 border-neutral-800 text-neutral-500 group-hover:text-neutral-300'
-                    }`}
-                  >
-                    {standard.icon}
-                  </span>
-
-                  <span className="relative hidden sm:block font-mono text-[11px] tracking-widest text-neutral-600 shrink-0 w-16">
-                    {standard.code}
-                  </span>
-
-                  <span className="relative min-w-0 flex-1">
-                    <span className="block text-sm sm:text-base font-black text-white tracking-tight uppercase font-['Helvetica_Neue',Helvetica,Arial,sans-serif]">
-                      {standard.title}
-                    </span>
-                    <span className="block text-[12px] sm:text-[13px] text-neutral-400 mt-0.5 leading-snug">
-                      {standard.promise}
-                    </span>
-                  </span>
-
-                  <ChevronRight
-                    className={`relative w-4 h-4 shrink-0 transition-all duration-300 ${
-                      isOpen ? 'rotate-90 text-red-500' : 'text-neutral-500 group-hover:translate-x-0.5'
-                    }`}
-                  />
-                </button>
-
+                {/* Decorative Cyber Corner Accents */}
                 <div
-                  className={`grid transition-all duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                  aria-hidden="true"
+                  className={`absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 rounded-tr-2xl transition-colors duration-300 ${
+                    isSelected ? 'border-red-500' : 'border-neutral-800 group-hover:border-red-500/50'
                   }`}
-                >
-                  <div className="overflow-hidden">
-                    <div className="px-4 sm:px-6 pb-4 sm:pb-5 sm:pl-[124px] grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2.5">
-                      {standard.included.map((item, ii) => (
-                        <div
-                          key={item}
-                          className="flex items-start gap-2.5 transition-[opacity,transform] duration-500 ease-out"
-                          style={{
-                            opacity: isOpen ? 1 : 0,
-                            transform: isOpen ? 'translateY(0)' : 'translateY(6px)',
-                            transitionDelay: isOpen ? `${100 + ii * 60}ms` : '0ms',
-                          }}
-                        >
-                          <CheckCircle2 className="w-3.5 h-3.5 text-red-500 shrink-0 mt-[3px]" />
-                          <span className="text-[13px] text-gray-300 leading-snug">{item}</span>
-                        </div>
-                      ))}
+                ></div>
 
-                      <p
-                        className="md:col-span-2 mt-2 pt-3 border-t border-neutral-800 text-[12px] font-mono text-neutral-500 leading-relaxed transition-[opacity,transform] duration-500 ease-out"
-                        style={{
-                          opacity: isOpen ? 1 : 0,
-                          transform: isOpen ? 'translateY(0)' : 'translateY(6px)',
-                          transitionDelay: isOpen ? '300ms' : '0ms',
-                        }}
-                      >
-                        HOLD US TO IT → {standard.accountability}
-                      </p>
+                {/* Top Row: Icon Badge + STD Code & Category */}
+                <div>
+                  <div className="flex items-start justify-between gap-4">
+                    <div
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                        isSelected
+                          ? 'bg-red-600/20 border border-red-500 text-red-400 shadow-[0_0_20px_rgba(239,68,68,0.3)] scale-105'
+                          : 'bg-neutral-900 border border-neutral-800 text-neutral-400 group-hover:text-red-400 group-hover:border-red-500/40 group-hover:bg-red-950/40'
+                      }`}
+                    >
+                      {standard.icon}
+                    </div>
+
+                    <div className="text-right">
+                      <span className="inline-block font-mono text-xs font-bold text-red-400 bg-red-950/30 border border-red-500/30 px-2.5 py-1 rounded-md tracking-wider">
+                        {standard.code}
+                      </span>
+                      <span className="block font-mono text-[10px] tracking-widest text-neutral-500 uppercase mt-1.5">
+                        {standard.category}
+                      </span>
                     </div>
                   </div>
+
+                  {/* Standard Title */}
+                  <h3 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tight font-['Helvetica_Neue',Helvetica,Arial,sans-serif] mt-5 group-hover:text-red-400 transition-colors">
+                    {standard.title}
+                  </h3>
+
+                  {/* Core Promise Callout */}
+                  <div className="mt-3 p-3.5 rounded-lg bg-neutral-900/60 border-l-2 border-red-500 text-sm text-neutral-200 leading-relaxed font-sans">
+                    {standard.promise}
+                  </div>
+
+                  {/* Verifiable Requirements */}
+                  <div className="mt-6">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 font-semibold mb-2.5 block">
+                      Mandatory Protocols
+                    </span>
+                    <div className="space-y-2">
+                      {standard.included.map((item) => (
+                        <div
+                          key={item}
+                          className="flex items-center gap-2.5 text-xs sm:text-[13px] text-neutral-300 py-2 px-3 rounded-lg bg-[#141414] border border-neutral-800/80 group-hover:border-neutral-700/80 transition-colors"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5 text-red-500 shrink-0" />
+                          <span className="leading-snug">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Accountability / Hold Us To It Guarantee Box */}
+                <div className="mt-6 pt-4 border-t border-neutral-800/80">
+                  <div className="flex items-center gap-1.5 font-mono text-[11px] font-bold text-red-500 uppercase tracking-widest mb-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-red-500" />
+                    <span>Hold Us To It — Client Guarantee</span>
+                  </div>
+                  <p className="text-xs sm:text-[13px] text-neutral-400 font-sans leading-relaxed">
+                    {standard.accountability}
+                  </p>
                 </div>
               </div>
             );
