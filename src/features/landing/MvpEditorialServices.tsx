@@ -217,6 +217,7 @@ export const MvpEditorialServices: React.FC = () => {
             }
 
             // Progressive card switching with dwell throttle
+            if (isUserHoveringRef.current) return;
             const total = editorialServices.length;
             const targetIndex = Math.min(
               total - 1,
@@ -297,6 +298,11 @@ export const MvpEditorialServices: React.FC = () => {
       activeIndexRef.current = idx;
     }
     setActivePreview(svc);
+    isUserHoveringRef.current = true;
+    if (userInteractedTimeoutRef.current) clearTimeout(userInteractedTimeoutRef.current);
+    userInteractedTimeoutRef.current = setTimeout(() => {
+      isUserHoveringRef.current = false;
+    }, 700);
   };
 
   return (
@@ -448,16 +454,27 @@ export const MvpEditorialServices: React.FC = () => {
 
                   <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
                     <span
-                      className={`service-number font-mono text-xs sm:text-base font-bold shrink-0 transition-colors duration-200 ${
-                        isActive ? 'text-red-500' : 'text-neutral-500'
+                      className={`service-number font-mono text-xs sm:text-base font-bold shrink-0 transition-colors ${
+                        isActive ? 'text-red-500' : 'text-neutral-500 group-hover:text-neutral-200'
                       }`}
                     >
                       {svc.number}
                     </span>
                     <div className="truncate min-w-0">
-                      <h3 className="service-name text-xs sm:text-[13px] font-bold text-white tracking-tight truncate block">
-                        {svc.title}
-                      </h3>
+                      {/* Title wrapper: smoothly shifts down to center itself when subtitle vanishes */}
+                      <div className="service-title-wrap">
+                        <div className="relative overflow-hidden block py-0.5">
+                          <h3 className="service-name service-title-primary text-xs sm:text-[13px] font-bold text-white tracking-tight truncate block">
+                            {svc.title}
+                          </h3>
+                          <h3
+                            aria-hidden="true"
+                            className="service-name service-title-duplicate text-xs sm:text-[13px] font-bold text-white tracking-tight truncate absolute inset-0 py-0.5 pointer-events-none"
+                          >
+                            {svc.title}
+                          </h3>
+                        </div>
+                      </div>
                       {/* Subtitle: hidden on compact mobile to save critical vertical space */}
                       <p className="hidden sm:block service-description text-[10px] sm:text-[11px] text-neutral-400 mt-0.5 truncate">
                         {svc.subtitle}
@@ -466,17 +483,25 @@ export const MvpEditorialServices: React.FC = () => {
                   </div>
 
                   <div
-                    className={`service-arrow-wrap w-5 h-5 sm:w-7 sm:h-7 rounded-full flex items-center justify-center shrink-0 ml-2 sm:ml-2.5 transition-all duration-200 ${
+                    className={`service-arrow-wrap w-5 h-5 sm:w-7 sm:h-7 rounded-full flex items-center justify-center shrink-0 ml-2 sm:ml-2.5 transition-all ${
                       isActive
                         ? 'bg-red-600 text-white shadow-md shadow-red-600/40'
-                        : 'text-neutral-500'
+                        : 'text-neutral-500 group-hover:text-white group-hover:bg-white/[0.08]'
                     }`}
                   >
-                    {isActive ? (
-                      <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" />
-                    ) : (
-                      <ArrowUpRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" />
-                    )}
+                    <div className="relative w-2.5 h-2.5 sm:w-3 sm:h-3 overflow-hidden flex items-center justify-center">
+                      {isActive ? (
+                        <>
+                          <ArrowRight className="service-arrow-primary-h w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" />
+                          <ArrowRight className="service-arrow-duplicate-h w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0 absolute inset-0 pointer-events-none" />
+                        </>
+                      ) : (
+                        <>
+                          <ArrowUpRight className="service-arrow-primary w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0" />
+                          <ArrowUpRight className="service-arrow-duplicate w-2.5 h-2.5 sm:w-3 sm:h-3 shrink-0 absolute inset-0 pointer-events-none" />
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
