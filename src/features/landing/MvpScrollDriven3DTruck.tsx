@@ -354,7 +354,7 @@ export const MvpScrollDriven3DTruck: React.FC = () => {
         {/* Section Header */}
         <AnimatedHeading
           as="h2"
-          text="Why American Homeowners & Enterprises"
+          text="Why American Homeowners"
           gradientText="Choose Us"
           subtitle="Scroll down to rotate our 26-foot commercial fleet in 360° and inspect purpose-built moving engineering."
           align="center"

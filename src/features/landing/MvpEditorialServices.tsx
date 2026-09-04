@@ -443,7 +443,7 @@ export const MvpEditorialServices: React.FC = () => {
                   onClick={() => handleSelectService(svc)}
                   className={`service-item min-h-[34px] sm:min-h-[56px] sm:h-[62px] py-1 sm:py-2 px-2.5 sm:px-4 rounded-lg sm:rounded-xl border transition-all duration-200 cursor-pointer flex items-center justify-between group relative overflow-hidden ${
                     isActive
-                      ? 'bg-[#151515] border-red-500/80 shadow-sm'
+                      ? 'bg-[#151515] border-red-500/80 shadow-sm is-active'
                       : 'bg-[#0f0f0f] border-neutral-800/80 hover:border-neutral-700 hover:bg-[#131313]'
                   }`}
                 >

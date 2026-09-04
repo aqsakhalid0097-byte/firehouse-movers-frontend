@@ -10,7 +10,6 @@ export interface AboutSection {
 export const aboutSections: AboutSection[] = [
   { id: 'glance', label: 'At a Glance' },
   { id: 'timeline', label: 'Timeline' },
-  { id: 'standards', label: 'Standards' },
 ];
 
 /**
