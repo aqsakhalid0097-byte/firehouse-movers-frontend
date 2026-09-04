@@ -8,7 +8,6 @@ import { AboutSectionNav } from '../features/about/AboutSectionNav';
 import { MvpPreloader } from '../features/landing/MvpPreloader';
 import { AboutAtAGlance } from '../features/about/AboutAtAGlance';
 import { AboutTimeline } from '../features/about/AboutTimeline';
-import { AboutValues } from '../features/about/AboutValues';
 import { AboutJoinTeamCta } from '../features/about/AboutJoinTeamCta';
 import { LandingFooter } from '../features/landing/LandingFooter';
 import { MvpBackToTop } from '../features/landing/MvpBackToTop';
@@ -40,7 +39,6 @@ export const AboutPage: React.FC = () => {
       <main>
         <AboutAtAGlance />
         <AboutTimeline />
-        <AboutValues />
         <AboutJoinTeamCta />
       </main>
 
