@@ -308,7 +308,7 @@ export const AboutTimeline: React.FC = () => {
                       </div>
 
                       <div className="relative z-10 mt-5">
-                        <h3 className="text-base sm:text-lg font-black text-white tracking-tight uppercase font-['Helvetica_Neue',Helvetica,Arial,sans-serif] leading-tight">
+                        <h3 className="text-base sm:text-lg font-black text-white tracking-tight uppercase font-['Aeonik',var(--font-aeonik),sans-serif] leading-tight">
                           {milestone.title}
                         </h3>
                         <p className="text-[13px] text-neutral-400 mt-1.5 leading-snug">{milestone.summary}</p>
