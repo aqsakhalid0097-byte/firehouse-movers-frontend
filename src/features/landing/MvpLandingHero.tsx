@@ -126,7 +126,7 @@ export const MvpLandingHero: React.FC = () => {
       {/* Main Left-Aligned Content Column (Centered on Y-Axis) */}
       <div className="relative z-10 max-w-[1700px] mx-auto px-4 sm:px-10 lg:px-16 w-full -translate-y-2 sm:-translate-y-8 lg:-translate-y-10">
         <div className="max-w-5xl text-left space-y-4 sm:space-y-5">
-          {/* Clean 2-Line Headline in Helvetica Neue 100 uppercase */}
+          {/* Clean 2-Line Headline in Aeonik uppercase */}
           <h1 className="display-heading display-heading--hero text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]">
             <div className="overflow-hidden pb-1 sm:pb-2">
               <span className="hero-headline-line inline-block pb-1">Smart Dispatch.</span>
