@@ -6,12 +6,12 @@ import { useAuth } from '../context/AuthContext';
 import { SmoothScrollProvider } from '../features/landing/SmoothScrollProvider';
 import { MvpPreloader } from '../features/landing/MvpPreloader';
 import { MvpLandingHero } from '../features/landing/MvpLandingHero';
-import { MvpPartnersMarquee } from '../features/landing/MvpPartnersMarquee';
-import { MvpAboutSection } from '../features/landing/MvpAboutSection';
-import { MvpScrollDriven3DTruck } from '../features/landing/MvpScrollDriven3DTruck';
-import { MvpEditorialServices } from '../features/landing/MvpEditorialServices';
+import { ClientWhoWeAreSection } from '../features/landing/ClientWhoWeAreSection';
+import { HamzaServicesSection } from '../features/landing/HamzaServicesSection';
+import { HybridHowItWorksSection } from '../features/landing/HybridHowItWorksSection';
 import { MoveJourneyPinnedScroll } from '../features/journey/MoveJourneyPinnedScroll';
-import { MvpTextParallax } from '../features/landing/MvpTextParallax';
+import { ClientGuaranteesSection } from '../features/landing/ClientGuaranteesSection';
+import { TestimonialsSection } from '../features/landing/TestimonialsSection';
 import { MvpContactSection } from '../features/landing/MvpContactSection';
 import { LandingFooter } from '../features/landing/LandingFooter';
 import { MvpBackToTop } from '../features/landing/MvpBackToTop';
@@ -25,39 +25,35 @@ export const LandingPage: React.FC = () => {
       <MvpPreloader />
 
       <div className="min-h-screen bg-black text-gray-100 font-sans antialiased overflow-x-hidden selection:bg-red-600 selection:text-white">
-        {/* 1. Luxury Glassmorphism Navbar */}
+        {/* Navigation Bar */}
         <Navbar isAuthenticated={isAuthenticated} user={user} onLogout={logout} />
 
         <main>
-          {/* 2. Hero: Master entrance + storytelling origin narrative + magnetic CTA */}
+          {/* 1. Hero Section (Mine) */}
           <MvpLandingHero />
 
-          {/* 3. Partners & Corporate Clients Infinite Marquee */}
-          <MvpPartnersMarquee />
+          {/* 2. Who We Are Section (Client Website with Interactive Particle Crew) */}
+          <ClientWhoWeAreSection />
 
-          {/* 4. About Section: Story, image mask zoom, and animated radial numeric gauges */}
-          <MvpAboutSection />
+          {/* 3. Services Section (Hamza 3D Tilt & Glare Editorial Cards) */}
+          <HamzaServicesSection />
 
-          {/* 5. Scroll-Driven 3D Truck 180° Rotation & Operational Standards */}
-          <MvpScrollDriven3DTruck />
+          {/* 4. How It Works (Hybrid: Description & Cards in Same Line like Client, Design like Hamza) */}
+          <HybridHowItWorksSection />
 
-          {/* 6. Comprehensive Service Directory: Exact reference 2-column showcase */}
-          <MvpEditorialServices />
-
-          {/* 7. Move Lifecycle Journey: Sinusoidal wavelength pinned scroll progression */}
+          {/* 5. Move Wavelength Journey (Mine, Improved with Interactive Nodes & Vector Marker) */}
           <MoveJourneyPinnedScroll />
 
-          {/* 8. Scrubbed Giant Typography Parallax */}
-          <MvpTextParallax />
+          {/* 6. Irreplaceable Highlights from Client Website (Written Guarantees, Reviews, FAQ) */}
+          <ClientGuaranteesSection />
+          <TestimonialsSection />
 
-          {/* 11. Contact / Relocation Proposal Section: Full-screen interactive proposal view */}
+          {/* 7. Contact Section (Mine with Lusion-Style Square Particle Scatter Canvas) */}
           <MvpContactSection id="estimate-calculator" />
         </main>
 
-        {/* 12. Global Rich Footer */}
+        {/* Global Rich Footer & Back To Top */}
         <LandingFooter />
-
-        {/* 13. Back to Top Floating Interaction */}
         <MvpBackToTop />
       </div>
     </SmoothScrollProvider>
@@ -65,3 +61,4 @@ export const LandingPage: React.FC = () => {
 };
 
 export default LandingPage;
+

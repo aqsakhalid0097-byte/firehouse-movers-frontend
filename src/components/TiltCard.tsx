@@ -11,6 +11,8 @@ export interface TiltCardProps {
   scale?: number; // Subtle lift/scale on hover (default 1.018)
   enabled?: boolean; // Controlled enabled prop
   delayMs?: number; // Wait for initial loading / entrance animations to finish before activating (default 1200ms)
+  glareColor?: string; // Specular light color (default 'rgba(255, 255, 255, 0.08)')
+  glareSize?: number; // Specular light radius in px (default 400)
 }
 
 /**
@@ -31,6 +33,8 @@ export const TiltCard: React.FC<TiltCardProps> = ({
   scale = 1.018,
   enabled = true,
   delayMs = 1200,
+  glareColor = 'rgba(255, 255, 255, 0.08)',
+  glareSize = 400,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -114,7 +118,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
       if (glare) {
         const glareX = (mouseX + 0.5) * 100;
         const glareY = (mouseY + 0.5) * 100;
-        glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.08) 0%, transparent 65%)`;
+        glare.style.background = `radial-gradient(${glareSize}px circle at ${glareX}% ${glareY}%, ${glareColor} 0%, transparent 65%)`;
       }
 
       // Parallax movement on internal layered elements
@@ -173,7 +177,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
       container.removeEventListener('mouseleave', handleMouseLeave);
       gsap.killTweensOf(card);
     };
-  }, [isInteractive, maxTilt, perspective, scale]);
+  }, [isInteractive, maxTilt, perspective, scale, glareColor, glareSize]);
 
   return (
     <div
@@ -183,7 +187,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
     >
       <div
         ref={cardRef}
-        className="w-full h-full relative will-change-transform"
+        className="w-full h-full relative will-change-transform rounded-[inherit]"
         style={{ transformStyle: 'preserve-3d' }}
       >
         {children}

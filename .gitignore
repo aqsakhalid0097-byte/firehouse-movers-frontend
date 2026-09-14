@@ -1,4 +1,7 @@
 firehousemovers/
+Aqsa-firehouse-movers/
+hamza-firhouse-frontend/
+firehouse-website-client/
 
 # Next.js build output
 .next/
@@ -22,6 +25,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+.env
 .DS_Store
 *.suo
 *.ntvs*

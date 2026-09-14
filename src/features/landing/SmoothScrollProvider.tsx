@@ -46,6 +46,38 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
     gsap.ticker.add(updateTicker);
     gsap.ticker.lagSmoothing(0);
 
+    // 2.1 Ensure ScrollTrigger calculates accurate dimensions once fonts and layouts stabilize
+    const handleRefresh = () => {
+      if (lenis.isScrolling) {
+        const checkScrolling = () => {
+          if (!lenis.isScrolling) {
+            ScrollTrigger.refresh();
+          } else {
+            setTimeout(checkScrolling, 100);
+          }
+        };
+        setTimeout(checkScrolling, 100);
+      } else {
+        ScrollTrigger.refresh();
+      }
+    };
+
+    window.addEventListener('load', handleRefresh);
+    window.addEventListener('resize', handleRefresh);
+    if (typeof document !== 'undefined' && document.fonts) {
+      document.fonts.ready.then(handleRefresh).catch(() => {});
+    }
+
+    const t1 = setTimeout(() => {
+      if (window.scrollY < 50 && !lenis.isScrolling) handleRefresh();
+    }, 150);
+    const t2 = setTimeout(() => {
+      if (window.scrollY < 50 && !lenis.isScrolling) handleRefresh();
+    }, 500);
+    const t3 = setTimeout(() => {
+      if (window.scrollY < 50 && !lenis.isScrolling) handleRefresh();
+    }, 1200);
+
     const isReload = () => {
       try {
         const navEntries = performance.getEntriesByType('navigation');
@@ -65,7 +97,9 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
       }
       try {
         sessionStorage.removeItem('scroll_to_bottom_on_landing');
-      } catch {}
+      } catch {
+        // Ignore storage access errors in restricted environments
+      }
       delete (window as unknown as { __transitionToBottom?: boolean }).__transitionToBottom;
       window.scrollTo(0, 0);
       lenis.scrollTo(0, { immediate: true });
@@ -88,7 +122,9 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
     if (isFromAbout) {
       try {
         sessionStorage.removeItem('scroll_to_bottom_on_landing');
-      } catch {}
+      } catch {
+        // Ignore storage access errors in restricted environments
+      }
       delete (window as unknown as { __transitionToBottom?: boolean }).__transitionToBottom;
 
       // Clean the URL immediately so it never permanently alters the address bar or persists on refresh
@@ -109,6 +145,11 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
 
     // 3. Cleanup on Unmount
     return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      window.removeEventListener('load', handleRefresh);
+      window.removeEventListener('resize', handleRefresh);
       gsap.ticker.remove(updateTicker);
       lenis.destroy();
       ScrollTrigger.getAll().forEach((t) => t.kill());

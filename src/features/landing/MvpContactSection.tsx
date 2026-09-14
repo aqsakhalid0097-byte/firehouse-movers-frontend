@@ -118,6 +118,7 @@ export const MvpContactSection: React.FC<MvpContactSectionProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
+    particleFieldRef.current?.scatter();
     setIsSubmitted(true);
   };
 
@@ -133,8 +134,9 @@ export const MvpContactSection: React.FC<MvpContactSectionProps> = ({
       <SquareParticleField
         ref={particleFieldRef}
         gridSpacing={44}
-        interactionRadius={175}
+        interactionRadius={75}
         redRatio={0.06}
+        distribution="wave"
         className="z-0"
       />
 
@@ -190,7 +192,9 @@ export const MvpContactSection: React.FC<MvpContactSectionProps> = ({
 
           {/* Right Column: Staggered Lead & Move Form */}
           <div className="lg:col-span-7">
-            <div className="bg-[#141414] border border-neutral-700/80 rounded-3xl p-4 sm:p-8 lg:p-10 shadow-2xl space-y-5 sm:space-y-6">
+            {/* Flush against the page rather than boxed in a card, matching
+                the client site's flatter, un-boxed panels */}
+            <div className="p-4 sm:p-8 lg:p-10 space-y-5 sm:space-y-6 border-t border-neutral-800">
               <div className="flex items-center justify-between border-b border-neutral-800 pb-3 sm:pb-4">
                 <h3 className="font-bold text-base sm:text-lg text-white">Request Official Relocation Proposal</h3>
                 <span className="text-[11px] sm:text-xs text-red-400 font-mono font-semibold shrink-0">● Live Dispatch</span>

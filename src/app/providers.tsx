@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AuthProvider } from '../context/AuthContext';
 import { CustomCursor } from '../components/CustomCursor';
+import { CursorTrail } from '../components/CursorTrail';
 import { ScrollPageTransition } from '../components/ScrollPageTransition';
 
 if (typeof window !== 'undefined') {
@@ -51,6 +52,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <CursorTrail />
         <CustomCursor />
         <ScrollPageTransition />
         {children}

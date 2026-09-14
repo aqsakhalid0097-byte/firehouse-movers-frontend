@@ -20,7 +20,6 @@ export const MvpScrollDriven3DTruck: React.FC = () => {
   const canvasContainerRef = useRef<HTMLDivElement | null>(null);
   const progressBarRef = useRef<HTMLDivElement | null>(null);
 
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [is360Mode, setIs360Mode] = useState<boolean>(false);
 
   // Mutable animation state reference shared between GSAP and Three.js render loop
@@ -220,8 +219,6 @@ export const MvpScrollDriven3DTruck: React.FC = () => {
         animStateRef.current.progress = p;
         // Starts completely straight (0 rad) and rotates 180° (Math.PI) to the other straight side
         animStateRef.current.rotationY = p * Math.PI;
-
-        setScrollProgress(Math.round(p * 100));
 
         if (progressBarRef.current) {
           progressBarRef.current.style.width = `${p * 100}%`;
