@@ -11,6 +11,7 @@ import { HamzaServicesSection } from '../features/landing/HamzaServicesSection';
 import { HybridHowItWorksSection } from '../features/landing/HybridHowItWorksSection';
 import { MoveJourneyPinnedScroll } from '../features/journey/MoveJourneyPinnedScroll';
 import { ClientGuaranteesSection } from '../features/landing/ClientGuaranteesSection';
+import { ClientPackagingSection } from '../features/landing/ClientPackagingSection';
 import { TestimonialsSection } from '../features/landing/TestimonialsSection';
 import { MvpContactSection } from '../features/landing/MvpContactSection';
 import { LandingFooter } from '../features/landing/LandingFooter';
@@ -46,6 +47,10 @@ export const LandingPage: React.FC = () => {
 
           {/* 6. Irreplaceable Highlights from Client Website (Written Guarantees, Reviews, FAQ) */}
           <ClientGuaranteesSection />
+
+          {/* 6.1 Museum-Grade Packaging Protocol Sequence (5-Stage Transition with Closing Box) */}
+          <ClientPackagingSection />
+
           <TestimonialsSection />
 
           {/* 7. Contact Section (Mine with Lusion-Style Square Particle Scatter Canvas) */}
