@@ -135,17 +135,17 @@ export const AboutHero: React.FC = () => {
       {/* Pinned Viewport Shell (Height constrained to viewport on desktop so left column is 100% locked) */}
       <div
         ref={pinSectionRef}
-        className="relative lg:h-[calc(100vh-72px)] w-full flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 lg:py-0 z-10"
+        className="relative lg:h-[calc(100vh-72px)] w-full flex flex-col justify-start px-6 sm:px-10 lg:px-16 py-10 lg:py-0 z-10"
       >
         <div className="w-[min(1280px,calc(100%-32px))] sm:w-[min(1280px,calc(100%-64px))] lg:w-[min(1360px,calc(100%-80px))] mx-auto h-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center h-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 h-full lg:pt-10 xl:pt-12 lg:pb-6">
             {/* ============================================================
                 LEFT COLUMN: 100% Stationary Visual Anchor
                 Firmly locked inside the pinned viewport. Never moves on scroll.
                 ============================================================ */}
-            <div className="lg:col-span-5 h-full flex flex-col justify-center py-6 sm:py-8 lg:py-6 z-20">
+            <div className="lg:col-span-5 h-full flex flex-col justify-start z-20">
               {/* [IMAGE] Anchor Frame (Clean photography matching reference) */}
-              <div className="relative aspect-[16/10] w-full max-w-[420px] max-h-[250px] sm:max-h-[270px] rounded-xl overflow-hidden border border-neutral-800/80 bg-neutral-900 shadow-2xl group shrink-0 mb-8 sm:mb-10 lg:mb-12">
+              <div className="relative aspect-[16/10] w-full max-w-[380px] max-h-[230px] rounded-xl overflow-hidden border border-neutral-800/80 bg-neutral-900 shadow-2xl group shrink-0 mb-8 lg:mb-10">
                 <Image
                   src="/images/hero_sunset_truck.jpg"
                   alt="Firehouse Movers Texas Fleet"
@@ -156,7 +156,7 @@ export const AboutHero: React.FC = () => {
               </div>
 
               {/* Headline Anchor (Two-tone contrast exactly matching reference) */}
-              <h1 className="display-heading text-4xl sm:text-5xl lg:text-6xl xl:text-[68px] tracking-tight leading-[0.88] uppercase select-none">
+              <h1 className="display-heading text-4xl sm:text-5xl lg:text-[50px] xl:text-[60px] tracking-tight leading-[0.9] uppercase select-none font-bold">
                 <span className="block text-neutral-400">We Move</span>
                 <span className="block text-neutral-400">Freight.</span>
                 <span className="block text-white">We Own</span>
@@ -171,44 +171,47 @@ export const AboutHero: React.FC = () => {
                 ============================================================ */}
             <div
               ref={rightViewportRef}
-              className="lg:col-span-7 lg:h-full lg:overflow-hidden relative flex flex-col justify-center"
+              className="lg:col-span-7 h-full lg:overflow-hidden relative flex flex-col justify-start"
             >
               {/* Scrolling Inner Track */}
               <div
                 ref={rightTrackRef}
-                className="flex flex-col py-4 lg:py-16"
+                className="flex flex-col w-full"
               >
-                {/* ---------------- 1. INTRODUCTORY SECTION ---------------- */}
-                <div className="space-y-6 pt-2 pb-16 lg:pb-24">
-                  <p className="text-xl sm:text-2xl lg:text-[28px] text-neutral-100 font-medium leading-[1.35] tracking-tight">
-                    With every service under one roof and one accountable team, your supply chain moves the way your business demands: predictably, transparently, and without excuses.
-                  </p>
+                {/* ---------------- 1. INTRODUCTORY SECTION (Fold 1) ---------------- */}
+                <div className="min-h-0 lg:min-h-[calc(100vh-136px)] flex flex-col justify-between pb-8 lg:pb-2 shrink-0">
+                  {/* Top: Editorial Narrative & CTA */}
+                  <div className="space-y-6">
+                    <p className="text-xl sm:text-2xl lg:text-[27px] xl:text-[29px] text-neutral-100 font-medium leading-[1.32] tracking-tight">
+                      With every service under one roof and one accountable team, your supply chain moves the way your business demands: predictably, transparently, and without excuses.
+                    </p>
 
-                  <p className="text-base sm:text-lg lg:text-[21px] text-neutral-400 font-normal leading-[1.42] tracking-tight">
-                    That means no finger-pointing between vendors. No delays lost in handoffs. Just one team, accountable from origin to destination.
-                  </p>
+                    <p className="text-base sm:text-lg lg:text-[19px] xl:text-[20px] text-neutral-400 font-normal leading-[1.42] tracking-tight">
+                      That means no finger-pointing between vendors. No delays lost in handoffs. Just one team, accountable from origin to destination.
+                    </p>
 
-                  <div className="pt-4">
-                    <button
-                      type="button"
-                      onClick={handleLearnMore}
-                      className="inline-flex items-center justify-center px-7 py-3 rounded-full border border-neutral-700 hover:border-white text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-300 hover:text-white transition-all duration-200 cursor-pointer"
-                    >
-                      LEARN MORE ABOUT US
-                    </button>
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={handleLearnMore}
+                        className="inline-flex items-center justify-center px-7 py-3 rounded-full border border-neutral-700 hover:border-white text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-300 hover:text-white transition-all duration-200 cursor-pointer"
+                      >
+                        LEARN MORE ABOUT US
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Bottom: Peeking Eyebrow & Hairline Divider */}
+                  <div className="pt-10 lg:pt-6">
+                    <p className="text-sm sm:text-base text-neutral-400 font-normal mb-3 sm:mb-4 normal-case">
+                      From countless journeys, clarity emerges
+                    </p>
+                    <div className="border-t border-neutral-800/80 w-full" />
                   </div>
                 </div>
 
                 {/* ---------------- 2. STATISTICS SECTION (Reference Style) ---------------- */}
-                <div className="pt-4">
-                  {/* Eyebrow Header (Peeking at the bottom of the first view) */}
-                  <p className="text-sm sm:text-base text-neutral-400 font-normal mb-3 sm:mb-4 normal-case">
-                    From countless journeys, clarity emerges
-                  </p>
-
-                  {/* Hairline Divider */}
-                  <div className="border-t border-neutral-800/80 w-full" />
-
+                <div className="pt-2">
                   {/* STAT 1: 2,500+ */}
                   <div className="py-10 sm:py-12 lg:py-14">
                     <div
