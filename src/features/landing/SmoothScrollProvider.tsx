@@ -143,11 +143,60 @@ export const SmoothScrollProvider: React.FC<SmoothScrollProviderProps> = ({ chil
       }, 350);
     }
 
+    // If arriving on About page, ALWAYS force scroll position to the uppermost point (0, 0)
+    // and absorb any trailing inertial swipe momentum from the Main page
+    const isAboutPage = typeof window !== 'undefined' && window.location.pathname === '/about';
+    const hasAboutFlag =
+      (typeof sessionStorage !== 'undefined' && sessionStorage.getItem('land_at_top_of_about') === 'true') ||
+      (window as unknown as { __landAtTopOfAbout?: boolean }).__landAtTopOfAbout === true;
+
+    let tAbout1: NodeJS.Timeout | undefined;
+    let tAbout2: NodeJS.Timeout | undefined;
+    let tAbout3: NodeJS.Timeout | undefined;
+
+    if (isAboutPage || hasAboutFlag) {
+      try {
+        sessionStorage.removeItem('land_at_top_of_about');
+      } catch {}
+      delete (window as unknown as { __landAtTopOfAbout?: boolean }).__landAtTopOfAbout;
+
+      // Immediately lock to top and stop Lenis from processing trailing inertial swipe events
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true });
+      lenis.stop();
+
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+        lenis.scrollTo(0, { immediate: true });
+      });
+
+      tAbout1 = setTimeout(() => {
+        window.scrollTo(0, 0);
+        lenis.scrollTo(0, { immediate: true });
+      }, 80);
+
+      tAbout2 = setTimeout(() => {
+        window.scrollTo(0, 0);
+        lenis.scrollTo(0, { immediate: true });
+      }, 250);
+
+      // Once the transition cover finishes and user is landed at top, re-enable smooth scroll
+      tAbout3 = setTimeout(() => {
+        window.scrollTo(0, 0);
+        lenis.scrollTo(0, { immediate: true });
+        ScrollTrigger.refresh();
+        lenis.start();
+      }, 650);
+    }
+
     // 3. Cleanup on Unmount
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
+      if (tAbout1) clearTimeout(tAbout1);
+      if (tAbout2) clearTimeout(tAbout2);
+      if (tAbout3) clearTimeout(tAbout3);
       window.removeEventListener('load', handleRefresh);
       window.removeEventListener('resize', handleRefresh);
       gsap.ticker.remove(updateTicker);

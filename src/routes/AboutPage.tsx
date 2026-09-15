@@ -31,7 +31,7 @@ export const AboutPage: React.FC = () => {
     <SmoothScrollProvider>
       <div
         data-about-root
-        className="min-h-screen bg-black text-gray-100 font-sans antialiased overflow-x-hidden selection:bg-red-600 selection:text-white"
+        className="min-h-screen bg-black text-gray-100 font-sans antialiased overflow-x-clip selection:bg-red-600 selection:text-white"
       >
         {/* Navigation Header */}
         <Navbar isAuthenticated={isAuthenticated} user={user} onLogout={logout} />
