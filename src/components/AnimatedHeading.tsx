@@ -138,8 +138,7 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
     <div ref={containerRef} className={`flex flex-col ${alignmentClass} ${className}`}>
       {/* Optional Top Badge / Mono Kicker */}
       {badge && (
-        <div className="anim-heading-badge inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-red-950/60 border border-red-500/30 text-red-400 font-mono font-bold text-xs uppercase tracking-widest shadow-sm">
-          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+        <div className="anim-heading-badge inline-flex items-center mb-3 text-red-400 font-mono font-bold text-xs uppercase tracking-[0.18em]">
           <span>{badge}</span>
         </div>
       )}

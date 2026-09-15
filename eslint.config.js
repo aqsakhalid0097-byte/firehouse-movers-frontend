@@ -5,7 +5,15 @@ import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist', '.next', 'node_modules', 'firehousemovers/**']),
+  globalIgnores([
+    'dist',
+    '.next',
+    'node_modules',
+    'firehousemovers/**',
+    'Aqsa-firehouse-movers/**',
+    'hamza-firhouse-frontend/**',
+    'firehouse-website-client/**',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -22,6 +30,7 @@ export default defineConfig([
       },
     },
     rules: {
+      'no-empty': ['error', { allowEmptyCatch: true }],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       'react-hooks/rules-of-hooks': 'error',

@@ -171,7 +171,7 @@ export const AboutTimeline: React.FC = () => {
           const rawIndex = p * (n - 1);
           const step = getCardStep();
 
-          gsap.set(track, { x: -rawIndex * step });
+          gsap.set(track, { x: -rawIndex * step, force3D: true });
 
           cardRefs.current.forEach((el, i) => {
             if (!el) return;
@@ -180,6 +180,7 @@ export const AboutTimeline: React.FC = () => {
               scale: gsap.utils.interpolate(1, 0.82, dist),
               y: gsap.utils.interpolate(0, 22, dist),
               zIndex: Math.round((1 - dist) * 100),
+              force3D: true,
             });
           });
 

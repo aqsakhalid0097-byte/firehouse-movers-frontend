@@ -254,17 +254,25 @@ export const JourneyFeatureCard: React.FC<JourneyFeatureCardProps> = ({
           </svg>
         </div>
 
-        {/* ================= Back Face (#828181 Grey Interior with Red Framing & Black Typography) ================= */}
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[4px] border border-red-500 bg-[#828181] p-2.5 xs:p-3 sm:p-4 flex flex-col justify-between overflow-hidden shadow-2xl shadow-black/40">
+        {/* ================= Back Face (White HUD Interior with Red Framing) ================= */}
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[4px] border border-red-500 bg-white p-2.5 xs:p-3 sm:p-4 flex flex-col justify-between overflow-hidden shadow-2xl shadow-black/40">
           {/* 4 HUD Corner Brackets in Firehouse Red */}
           <div className="absolute top-1.5 left-1.5 w-2.5 h-2.5 border-t-[2.5px] border-l-[2.5px] border-red-500 pointer-events-none" />
           <div className="absolute top-1.5 right-1.5 w-2.5 h-2.5 border-t-[2.5px] border-r-[2.5px] border-red-500 pointer-events-none" />
           <div className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b-[2.5px] border-l-[2.5px] border-red-500 pointer-events-none" />
           <div className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b-[2.5px] border-r-[2.5px] border-red-500 pointer-events-none" />
 
-          {/* Background Wireframe Matrix */}
+          {/* Faint red glow seeping in from the top edge, so the white
+              interior reads as lit by the front face's red HUD rather than
+              a flat, disconnected panel - the grey version had no such
+              tie back to the rest of the card. */}
+          <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-red-500/[0.07] to-transparent pointer-events-none" />
+
+          {/* Background Wireframe Matrix - knocked down further now that
+              it's on white rather than mid-grey, so it reads as a faint
+              schematic instead of a pink wash across the text. */}
           <svg
-            className="absolute inset-0 w-full h-full opacity-15 pointer-events-none"
+            className="absolute inset-0 w-full h-full opacity-[0.06] pointer-events-none"
             viewBox="0 0 200 290"
             fill="none"
           >
@@ -278,20 +286,24 @@ export const JourneyFeatureCard: React.FC<JourneyFeatureCardProps> = ({
             </g>
           </svg>
 
-          {/* Top Stage & Index Pill */}
+          {/* Top Stage & Index Pill - a solid red pill instead of a
+              translucent-black-on-grey badge, so it reads as a clear
+              status chip rather than sitting muddily on the surface. */}
           <div className="flex items-center justify-between relative z-10">
-            <span className="font-mono text-[8px] sm:text-[9px] font-extrabold text-red-700 uppercase tracking-widest bg-black/15 px-1.5 sm:px-2 py-0.5 rounded border border-red-500/60">
+            <span className="font-mono text-[8px] sm:text-[9px] font-extrabold text-white uppercase tracking-widest bg-red-600 px-1.5 sm:px-2 py-0.5 rounded shadow-sm shadow-red-600/30">
               SPEC 0{index + 1}
             </span>
-            <span className="font-mono text-[7.5px] sm:text-[8.5px] font-bold text-black tracking-wider">
+            <span className="font-mono text-[7.5px] sm:text-[8.5px] font-bold text-neutral-500 tracking-wider">
               {stageLabel}
             </span>
           </div>
 
           {/* Center Info Area */}
           <div className="text-center relative z-10 my-auto px-0.5">
-            {/* Rotating Mini Diamond Badge with Red Icon */}
-            <div className="w-7 h-7 sm:w-8 sm:h-8 mx-auto mb-1.5 sm:mb-2 rotate-45 border-2 border-red-500 bg-black/20 flex items-center justify-center shadow-md shadow-red-500/15">
+            {/* Rotating Mini Diamond Badge with Red Icon - a soft red tint
+                instead of black/20, since a dark square read as a hole
+                punched in the white surface rather than part of it. */}
+            <div className="w-7 h-7 sm:w-8 sm:h-8 mx-auto mb-1.5 sm:mb-2 rotate-45 border-2 border-red-500 bg-red-50 flex items-center justify-center shadow-md shadow-red-500/15">
               <div className="-rotate-45 text-red-600">
                 {feat.iconType === 'shield' && <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />}
                 {feat.iconType === 'package' && <Box className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />}
@@ -299,18 +311,21 @@ export const JourneyFeatureCard: React.FC<JourneyFeatureCardProps> = ({
               </div>
             </div>
 
-            <div className="text-[11px] xs:text-xs sm:text-[13.5px] font-black text-black leading-tight tracking-tight">
+            <div className="text-[11px] xs:text-xs sm:text-[13.5px] font-black text-neutral-900 leading-tight tracking-tight">
               {feat.title}
             </div>
-            <div className="text-[8px] xs:text-[9px] sm:text-[10.5px] font-bold text-black leading-snug mt-1 sm:mt-1.5 line-clamp-3">
+            {/* Description sits a shade lighter than the title so the two
+                actually read as a hierarchy instead of two lines of the
+                same flat black. */}
+            <div className="text-[8px] xs:text-[9px] sm:text-[10.5px] font-semibold text-neutral-600 leading-snug mt-1 sm:mt-1.5 line-clamp-3">
               {feat.desc}
             </div>
           </div>
 
           {/* Bottom Protocol Status Bar */}
-          <div className="flex items-center justify-center gap-1.5 relative z-10 border-t border-black/20 pt-1 sm:pt-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-700 shrink-0" />
-            <span className="text-[7.5px] sm:text-[9px] font-mono font-bold text-black tracking-wider uppercase truncate">
+          <div className="flex items-center justify-center gap-1.5 relative z-10 border-t border-neutral-200 pt-1 sm:pt-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0 shadow-[0_0_4px_rgba(16,185,129,0.6)]" />
+            <span className="text-[7.5px] sm:text-[9px] font-mono font-bold text-neutral-700 tracking-wider uppercase truncate">
               ACTIVE PROTOCOL
             </span>
           </div>

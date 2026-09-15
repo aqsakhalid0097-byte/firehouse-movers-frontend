@@ -1,9 +1,70 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Star, Quote, CheckCircle2 } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { TextReveal } from '@/components/TextReveal';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export const TestimonialsSection: React.FC = () => {
+  const subtitleRef = useRef<HTMLParagraphElement | null>(null);
+  const reviewsGridRef = useRef<HTMLDivElement | null>(null);
+
+  // This section had no animation at all - not even the heading reveal
+  // every other main section heading got in the earlier sitewide pass, so
+  // it's wrapped in TextReveal below too. The subtitle fades/rises in on
+  // its own and the three review cards rise in as a stagger once the grid
+  // is in view, matching the card-grid pattern used elsewhere on the site.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const ctx = gsap.context(() => {
+      if (subtitleRef.current) {
+        gsap.fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 14 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: subtitleRef.current,
+              start: 'top 90%',
+              once: true,
+            },
+          }
+        );
+      }
+
+      if (reviewsGridRef.current) {
+        gsap.fromTo(
+          Array.from(reviewsGridRef.current.children),
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: reviewsGridRef.current,
+              start: 'top 85%',
+              once: true,
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const reviews = [
     {
       author: 'Sarah M.',
@@ -39,16 +100,20 @@ export const TestimonialsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white mb-4">
+          <TextReveal
+            as="h2"
+            className="text-3xl sm:text-5xl font-black tracking-tight text-white mb-4"
+            variant="flip"
+          >
             Trusted by Thousands of Texas Families
-          </h2>
-          <p className="text-gray-400 text-base">
+          </TextReveal>
+          <p ref={subtitleRef} className="text-gray-400 text-base">
             Read authentic reviews from homeowners and business managers who experienced the Firehouse difference.
           </p>
         </div>
 
         {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div ref={reviewsGridRef} className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {reviews.map((rev, idx) => (
             <div
               key={idx}

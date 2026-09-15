@@ -272,7 +272,8 @@ export const MoveJourneyPinnedScroll: React.FC = () => {
       start: 'top top',
       end: '+=2800',
       pin: pinContainer,
-      scrub: 0.9,
+      anticipatePin: 0,
+      scrub: 0.3,
       onUpdate: (self) => {
         const p = self.progress; // 0 to 1
         setScrollPercentage(Math.round(p * 100));
@@ -417,7 +418,7 @@ export const MoveJourneyPinnedScroll: React.FC = () => {
       {/* Pinned Screen Viewport */}
       <div
         ref={pinSectionRef}
-        className="h-screen w-full flex flex-col justify-between p-3 sm:p-5 lg:py-5 lg:px-8 overflow-hidden bg-gradient-to-b from-[#121212] via-black to-[#0d0d0d] relative"
+        className="h-screen w-full flex flex-col justify-between p-3 sm:p-5 lg:py-5 lg:px-8 overflow-hidden bg-gradient-to-b from-[#121212] via-black to-[#0d0d0d] relative z-20"
       >
         {/* Ambient Glows */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-[140px] pointer-events-none"></div>
@@ -474,6 +475,12 @@ export const MoveJourneyPinnedScroll: React.FC = () => {
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
+
+                {/* Headlight beam gradient */}
+                <linearGradient id="headlightCone" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#fef08a" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#fef08a" stopOpacity="0" />
+                </linearGradient>
               </defs>
 
               {/* 1. Base Highway Wavelength Background Track */}
@@ -504,30 +511,42 @@ export const MoveJourneyPinnedScroll: React.FC = () => {
                 const isCurrent = idx === activeStageIndex;
                 const stage = stagesData[idx];
 
+                const handleNodeClick = () => {
+                  if (!triggerRef.current) return;
+                  const targetScroll = triggerRef.current.offsetTop + (idx * 0.24) * 2800;
+                  window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                };
+
                 return (
-                  <g key={idx} transform={`translate(${pt.x}, ${pt.y})`} className="cursor-pointer">
+                  <g
+                    key={idx}
+                    transform={`translate(${pt.x}, ${pt.y})`}
+                    className="cursor-pointer group/node"
+                    onClick={handleNodeClick}
+                  >
                     {/* Pulsing Aura if Current */}
                     {isCurrent && (
-                      <circle r="28" fill="rgba(239, 68, 68, 0.25)" className="animate-ping" />
+                      <circle r="28" fill="rgba(239, 68, 68, 0.3)" className="animate-ping pointer-events-none" />
                     )}
 
                     {/* Outer Node Circle */}
                     <circle
-                      r="18"
-                      fill={isCurrent ? '#dc2626' : isReached ? '#1f1f23' : '#141416'}
+                      r={isCurrent ? 20 : 16}
+                      fill={isCurrent ? '#dc2626' : isReached ? '#18181b' : '#09090b'}
                       stroke={isCurrent ? '#ffffff' : isReached ? '#ef4444' : '#3f3f46'}
                       strokeWidth={isCurrent ? '3' : '2'}
-                      className="transition-all duration-300 drop-shadow-lg"
+                      className="transition-all duration-300 drop-shadow-xl group-hover/node:scale-125"
                     />
 
                     {/* Node Inner Label / Checkmark */}
                     <text
                       textAnchor="middle"
-                      dy="5"
+                      dy="4"
                       fill="#ffffff"
-                      fontSize="11"
+                      fontSize="10"
                       fontWeight="bold"
                       fontFamily="system-ui, sans-serif"
+                      className="pointer-events-none"
                     >
                       {isReached && !isCurrent ? '✓' : idx + 1}
                     </text>
@@ -536,11 +555,11 @@ export const MoveJourneyPinnedScroll: React.FC = () => {
                     <text
                       textAnchor="middle"
                       dy={idx % 2 === 0 ? '-26' : '36'}
-                      fill={isCurrent ? '#f87171' : isReached ? '#ffffff' : '#71717a'}
+                      fill={isCurrent ? '#ef4444' : isReached ? '#ffffff' : '#71717a'}
                       fontSize="11"
                       fontWeight="bold"
                       fontFamily="system-ui, sans-serif"
-                      className="transition-colors duration-300 drop-shadow-md"
+                      className="transition-colors duration-300 drop-shadow-md pointer-events-none"
                     >
                       {stage.title.split('•')[0]}
                     </text>
@@ -550,16 +569,20 @@ export const MoveJourneyPinnedScroll: React.FC = () => {
 
               {/* 4. Animated Driving Truck Marker Riding Wavelength */}
               <g ref={truckGroupRef} className="pointer-events-none drop-shadow-2xl">
-                {/* Firehouse Pickup Truck Graphic */}
-                <image
-                  href="/images/firehouse_pickup_truck.png"
-                  width="56"
-                  height="20"
-                  x="-28"
-                  y="-10"
-                  preserveAspectRatio="xMidYMid meet"
-                  className="drop-shadow-lg"
+                {/* Headlight Beam Glow */}
+                <polygon
+                  points="26,-6 65,-16 65,16 26,6"
+                  fill="url(#headlightCone)"
+                  opacity="0.6"
                 />
+                {/* Vector Firehouse Moving Truck */}
+                <rect x="-24" y="-10" width="30" height="20" rx="3" fill="#e4e4e7" stroke="#71717a" strokeWidth="1" />
+                <rect x="6" y="-8" width="18" height="16" rx="2.5" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" />
+                <rect x="18" y="-5" width="5" height="10" rx="1.5" fill="#09090b" />
+                {/* Tires */}
+                <circle cx="-16" cy="11" r="4.5" fill="#09090b" stroke="#71717a" strokeWidth="1.5" />
+                <circle cx="-5" cy="11" r="4.5" fill="#09090b" stroke="#71717a" strokeWidth="1.5" />
+                <circle cx="15" cy="11" r="4.5" fill="#09090b" stroke="#71717a" strokeWidth="1.5" />
               </g>
             </svg>
           </div>

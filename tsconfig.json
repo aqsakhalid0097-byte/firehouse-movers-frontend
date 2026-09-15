@@ -37,6 +37,9 @@
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "Aqsa-firehouse-movers",
+    "hamza-firhouse-frontend",
+    "firehouse-website-client"
   ]
 }
