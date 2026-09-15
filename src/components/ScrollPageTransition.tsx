@@ -161,6 +161,10 @@ export const ScrollPageTransition: React.FC = () => {
     setShowLabel(true);
 
     if (direction === 'to-about') {
+      try {
+        sessionStorage.setItem('land_at_top_of_about', 'true');
+      } catch {}
+      (window as unknown as { __landAtTopOfAbout?: boolean }).__landAtTopOfAbout = true;
       router.push('/about');
     } else {
       try {
