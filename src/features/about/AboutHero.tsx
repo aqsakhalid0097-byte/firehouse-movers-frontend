@@ -40,7 +40,8 @@ export const AboutHero: React.FC = () => {
   const rightTrackRef = useRef<HTMLDivElement | null>(null);
   const stat2500Ref = useRef<HTMLDivElement | null>(null);
   const stat982Ref = useRef<HTMLDivElement | null>(null);
-  const [activeTelemetry, setActiveTelemetry] = useState<'intro' | '2500' | '982'>('intro');
+  const stat100Ref = useRef<HTMLDivElement | null>(null);
+  const [activeTelemetry, setActiveTelemetry] = useState<'intro' | '2500' | '982' | '100'>('intro');
 
   useEffect(() => {
     if (typeof window === 'undefined' || !containerRef.current) return;
@@ -50,6 +51,7 @@ export const AboutHero: React.FC = () => {
     if (prefersReducedMotion) {
       if (stat2500Ref.current) stat2500Ref.current.textContent = '2,500+';
       if (stat982Ref.current) stat982Ref.current.textContent = '98.2%';
+      if (stat100Ref.current) stat100Ref.current.textContent = '100%';
       return;
     }
 
@@ -93,6 +95,9 @@ export const AboutHero: React.FC = () => {
       // Set initial count-up
       if (stat2500Ref.current) stat2500Ref.current.textContent = '2,500+';
       if (stat982Ref.current) stat982Ref.current.textContent = '98.2%';
+      if (stat100Ref.current) stat100Ref.current.textContent = '100%';
+
+      let hasAnimated100 = false;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -107,19 +112,25 @@ export const AboutHero: React.FC = () => {
           onUpdate: (self) => {
             const p = self.progress;
 
-            if (p < 0.32) {
+            if (p < 0.28) {
               setActiveTelemetry('intro');
-            } else if (p < 0.68) {
+            } else if (p < 0.58) {
               setActiveTelemetry('2500');
               if (!hasAnimated2500) {
                 hasAnimated2500 = true;
                 animateNumber(stat2500Ref.current, 2500, false);
               }
-            } else {
+            } else if (p < 0.85) {
               setActiveTelemetry('982');
               if (!hasAnimated982) {
                 hasAnimated982 = true;
                 animateNumber(stat982Ref.current, 98.2, true);
+              }
+            } else {
+              setActiveTelemetry('100');
+              if (!hasAnimated100) {
+                hasAnimated100 = true;
+                animateNumber(stat100Ref.current, 100, true);
               }
             }
           },
@@ -200,6 +211,7 @@ export const AboutHero: React.FC = () => {
                     {activeTelemetry === 'intro' && 'STATION 01 // FLEET COMMAND'}
                     {activeTelemetry === '2500' && 'DISPATCH METRIC // 2,500+ SHIPMENTS'}
                     {activeTelemetry === '982' && 'SCHEDULE LOCK // 98.2% ON-TIME'}
+                    {activeTelemetry === '100' && 'CREW INTEGRITY // 100% IN-HOUSE'}
                   </span>
                 </div>
 
@@ -322,157 +334,65 @@ export const AboutHero: React.FC = () => {
                       ))}
                     </dl>
                   </div>
-
-                  {/* Scroll Prompt Helper */}
-                  <div className="pt-2 hidden lg:flex items-center gap-2 text-[11px] font-mono text-neutral-500 uppercase tracking-wider">
-                    <ArrowDown className="w-3.5 h-3.5 text-red-500 animate-bounce" />
-                    <span>Scroll down to inspect scale &amp; precision records</span>
-                  </div>
                 </div>
 
-                {/* ---------------- DIVIDER ---------------- */}
-                <div className="relative py-2">
-                  <div className="border-t border-neutral-800/80 w-full" />
-                  <div className="absolute left-0 -top-1 px-3 bg-black font-mono text-[10px] uppercase tracking-widest text-neutral-500 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                    <span>OPERATIONAL SCALE // ANNUAL RECORD</span>
-                  </div>
-                </div>
-
-                {/* ---------------- 2. STATISTIC 1: 2,500+ ---------------- */}
-                <div
-                  data-stat-card="2500"
-                  className="rounded-2xl border border-neutral-800 bg-[#0c0c0c] p-5 sm:p-7 lg:p-8 shadow-2xl relative overflow-hidden transition-all duration-300 group hover:border-neutral-700"
-                >
-                  {/* Subtle Red Top Highlight Bar */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-red-500 to-transparent" />
-
-                  <div className="flex items-center justify-between pb-3 border-b border-neutral-800/80">
-                    <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-400">
-                      <Package className="w-4 h-4 text-red-500" />
-                      <span>ANNUAL TRAILING VOLUME</span>
-                    </div>
-                    <div className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
-                      ACTIVE LOG
-                    </div>
-                  </div>
-
-                  {/* Massive Focal Stat Number */}
-                  <div
-                    ref={stat2500Ref}
-                    className="display-heading text-6xl sm:text-7xl lg:text-8xl text-white tracking-tight leading-none my-4 select-none"
-                  >
-                    2,500+
-                  </div>
-
-                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mb-2.5 font-heading">
-                    Shipments &amp; Commercial Relocations Completed
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed mb-5">
-                    Over 2,500 enterprise consignments, corporate headquarters transitions, and high-value
-                    residential moves dispatched annually across North Texas and statewide routes. Handled
-                    with zero cargo abandonment, unbroken chain of custody, and verified bill of lading.
+                {/* ---------------- STATISTICS SECTION (Reference Style) ---------------- */}
+                <div className="pt-6 sm:pt-10">
+                  {/* Eyebrow Header */}
+                  <p className="text-sm sm:text-base text-neutral-300 font-normal mb-3 sm:mb-4 normal-case">
+                    From countless journeys, clarity emerges
                   </p>
 
-                  {/* Technical Spec Tags */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3.5 border-t border-neutral-800/80">
-                    <div className="p-2.5 rounded-xl bg-neutral-950/80 border border-neutral-800/70">
-                      <div className="font-mono text-[10px] uppercase text-neutral-500">Loss Rate</div>
-                      <div className="text-xs sm:text-sm font-bold text-white mt-0.5">0% Abandonment</div>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-neutral-950/80 border border-neutral-800/70">
-                      <div className="font-mono text-[10px] uppercase text-neutral-500">Securing</div>
-                      <div className="text-xs sm:text-sm font-bold text-white mt-0.5">Air-Ride E-Track</div>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-neutral-950/80 border border-neutral-800/70">
-                      <div className="font-mono text-[10px] uppercase text-neutral-500">Chain of Custody</div>
-                      <div className="text-xs sm:text-sm font-bold text-white mt-0.5">Single-Crew Direct</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* ---------------- DIVIDER ---------------- */}
-                <div className="relative py-2">
+                  {/* Hairline Divider */}
                   <div className="border-t border-neutral-800/80 w-full" />
-                  <div className="absolute left-0 -top-1 px-3 bg-black font-mono text-[10px] uppercase tracking-widest text-neutral-500 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                    <span>SCHEDULE DISCIPLINE // PRECISION</span>
-                  </div>
-                </div>
 
-                {/* ---------------- 3. STATISTIC 2: 98.2% ---------------- */}
-                <div
-                  data-stat-card="982"
-                  className="rounded-2xl border border-neutral-800 bg-[#0c0c0c] p-5 sm:p-7 lg:p-8 shadow-2xl relative overflow-hidden transition-all duration-300 group hover:border-neutral-700"
-                >
-                  {/* Subtle Red Top Highlight Bar */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-red-500 to-transparent" />
-
-                  <div className="flex items-center justify-between pb-3 border-b border-neutral-800/80">
-                    <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-400">
-                      <Clock className="w-4 h-4 text-red-500" />
-                      <span>ON-TIME WINDOW PRECISION</span>
+                  {/* STAT 1: 2,500+ */}
+                  <div className="py-8 sm:py-10 lg:py-12">
+                    <div
+                      ref={stat2500Ref}
+                      className="display-heading text-7xl sm:text-8xl lg:text-9xl xl:text-[116px] text-white tracking-tight leading-none select-none font-black"
+                    >
+                      2,500+
                     </div>
-                    <div className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-800 font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
-                      VERIFIED AUDIT
-                    </div>
+                    <p className="mt-3 text-base sm:text-lg lg:text-xl text-neutral-400 font-normal normal-case">
+                      Shipments per month
+                    </p>
                   </div>
 
-                  {/* Massive Focal Stat Number */}
-                  <div
-                    ref={stat982Ref}
-                    className="display-heading text-6xl sm:text-7xl lg:text-8xl text-red-500 tracking-tight leading-none my-4 select-none"
-                  >
-                    98.2%
+                  {/* Hairline Divider */}
+                  <div className="border-t border-neutral-800/80 w-full" />
+
+                  {/* STAT 2: 98.2% */}
+                  <div className="py-8 sm:py-10 lg:py-12">
+                    <div
+                      ref={stat982Ref}
+                      className="display-heading text-7xl sm:text-8xl lg:text-9xl xl:text-[116px] text-white tracking-tight leading-none select-none font-black"
+                    >
+                      98.2%
+                    </div>
+                    <p className="mt-3 text-base sm:text-lg lg:text-xl text-neutral-400 font-normal normal-case">
+                      On-time delivery rate
+                    </p>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight mb-2.5 font-heading">
-                    On-Time Arrival &amp; Direct Route Compliance
-                  </h3>
+                  {/* Hairline Divider */}
+                  <div className="border-t border-neutral-800/80 w-full" />
 
-                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed mb-5">
-                    Direct-route dispatch ensures arrival inside the agreed operational window across Dallas,
-                    Fort Worth, and Texas corridors. Monitored through live GPS telematics by station
-                    dispatch. No broker delays, no cargo swaps, and no day-labor excuses.
-                  </p>
+                  {/* STAT 3: 100% */}
+                  <div className="py-8 sm:py-10 lg:py-12">
+                    <div
+                      ref={stat100Ref}
+                      className="display-heading text-7xl sm:text-8xl lg:text-9xl xl:text-[116px] text-white tracking-tight leading-none select-none font-black"
+                    >
+                      100%
+                    </div>
+                    <p className="mt-3 text-base sm:text-lg lg:text-xl text-neutral-400 font-normal normal-case">
+                      In-house crew accountability
+                    </p>
+                  </div>
 
-                  {/* Technical Spec Tags */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3.5 border-t border-neutral-800/80">
-                    <div className="p-2.5 rounded-xl bg-neutral-950/80 border border-neutral-800/70">
-                      <div className="font-mono text-[10px] uppercase text-neutral-500">Telematics</div>
-                      <div className="text-xs sm:text-sm font-bold text-white mt-0.5">Live GPS Monitored</div>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-neutral-950/80 border border-neutral-800/70">
-                      <div className="font-mono text-[10px] uppercase text-neutral-500">Dispatch Window</div>
-                      <div className="text-xs sm:text-sm font-bold text-white mt-0.5">Station Logged</div>
-                    </div>
-                    <div className="p-2.5 rounded-xl bg-neutral-950/80 border border-neutral-800/70">
-                      <div className="font-mono text-[10px] uppercase text-neutral-500">Crew Model</div>
-                      <div className="text-xs sm:text-sm font-bold text-white mt-0.5">100% In-House Staff</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Grounding Seal / Section Transition Anchor */}
-                <div className="p-5 rounded-2xl border border-neutral-800/60 bg-neutral-950/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-red-600/10 border border-red-500/20 flex items-center justify-center shrink-0">
-                      <ShieldCheck className="w-5 h-5 text-red-500" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-mono uppercase tracking-wider text-neutral-300 font-bold">
-                        PREPARED. ACCOUNTABLE. ON TIME.
-                      </div>
-                      <div className="text-xs text-neutral-500 mt-0.5">
-                        Firehouse Movers Texas Fleet &amp; Logistics • Lewisville Station 1 &amp; 2
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                    <span>STATEWIDE LICENSED &amp; BONDED</span>
-                  </div>
+                  {/* Hairline Divider */}
+                  <div className="border-t border-neutral-800/80 w-full mb-10" />
                 </div>
               </div>
             </div>
